@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MamaCare: Cegah AKI Sejak Dini</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Desain CSS: Gen Z tapi Profesional */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom right, #FF6F61, #AEC6CF);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: #FF69B4;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        header h1 {
+            color: #FFFFFF;
+            font-size: 2.5em;
+            margin: 0;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-color: #AEC6CF;
+            margin: 10px 0;
+            flex-wrap: wrap;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #FF6F61;
+            font-weight: 600;
+            padding: 10px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 5px;
+        }
+        
+        nav ul li a:hover {
+            background-color: #4ECDC4;
+            color: #FFFFFF;
+            animation: pulse 0.5s;
+        }
+        
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        section {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #F8F9FA;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            animation: fadeIn 0.8s ease-in;
+            transition: transform 0.3s;
+            display: none;
+        }
+        
+        section.active {
+            display: block;
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+        }
+        
+        h2 {
+            color: #4ECDC4;
+            border-bottom: 2px solid #FF6F61;
+            padding-bottom: 10px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background-color: #FFFFFF;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .close {
+            color: #FF6F61;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #4ECDC4;
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            margin: 10px auto;
+            display: block;
+        }
+        
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Gaya umum */
+        button, input {
+            background-color: #4ECDC4;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            background-color: #FF6F61;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            color: #FFFFFF;
+        }
+        
+        .ibu-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin: 10px auto;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .ibu-image:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Responsif */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+    <script>
+        function openSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        function openModal(imageSrc, title, description) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDescription').innerText = description;
+            document.getElementById('myModal').style.display = 'block';
+        }
+        
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+        
+        window.onload = function() {
+            openSection('beranda');
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <h1>MamaCare: Cegah AKI Sejak Dini 💕</h1>
+        <p>Edukasi untuk ibu hamil yang kuat dan sehat!</p>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="openSection('beranda')"><i class="fas fa-home"></i> Beranda</a></li>
+                <li><a href="#" onclick="openSection('edukasi')"><i class="fas fa-book"></i> Edukasi AKI</a></li>
+                <li><a href="#" onclick="openSection('kisah')"><i class="fas fa-heart"></i> Kisah Ibu</a></li>
+                <li><a href="#" onclick="openSection('kuis')"><i class="fas fa-question-circle"></i> Kuis</a></li>
+                <li><a href="#" onclick="openSection('gaya-hidup')"><i class="fas fa-leaf"></i> Gaya Hidup</a></li>
+                <li><a href="#" onclick="openSection('konsultasi')"><i class="fas fa-stethoscope"></i> Konsultasi</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <!-- Beranda -->
+        <section id="beranda">
+            <h2>Halo, Ibu Hebat! 💕</h2>
+            <p>Selamat datang di MamaCare. Di sini, Anda bisa belajar tentang pencegahan AKI!</p>
+            <button onclick="openSection('edukasi')">Lanjut ke Edukasi AKI</button>
+        </section>
+        
+        <!-- Edukasi AKI -->
+        <section id="edukasi">
+            <h2>Edukasi tentang AKI 📘</h2>
+            <p>AKI adalah Angka Kematian Ibu. Penyebab: Hipertensi, anemia.</p>
+            <div>
+                <h3>Topik:</h3>
+                <ul>
+                    <li>Apa itu AKI? <button onclick="showInfo('Apa itu AKI?')">Lihat</button></li>
+                    <li>Penyebab dan Risiko <button onclick="showInfo('Penyebab')">Lihat</button></li>
+                </ul>
+            </div>
+            <p id="infoDisplay"></p>
+            <button onclick="openSection('kisah')">Lanjut ke Kisah Ibu</button>
+            <script>
+                function showInfo(topic) {
+                    const info = {
+                        'Apa itu AKI?': 'AKI adalah kematian ibu saat melahirkan, sering disebabkan oleh komplikasi.',
+                        'Penyebab': 'Faktor risiko termasuk hipertensi dan infeksi.'
+                    };
+                    document.getElementById('infoDisplay').innerHTML = info[topic] || 'Informasi tidak tersedia.';
+                }
+            </script>
+        </section>
+        
+        <!-- Kisah Ibu -->
+        <section id="kisah">
+            <h2>Kisah Ibu Inspiratif 💖</h2>
+            <img src="https://source.unsplash.com/300x200/?happy-mother-story" alt="Ilustrasi Kisah Ibu 1" class="ibu-image" onclick="openModal('https://source.unsplash.com/300x200/?happy-mother-story', 'Kisah Ibu Ana', 'Ibu Ana berhasil cegah AKI dengan olahraga rutin dan konsultasi dokter. Ceritanya menginspirasi banyak ibu untuk tetap sehat selama kehamilan.')">
+            <img src="https://source.unsplash.com/300x200/?pregnant-woman-story" alt="Ilustrasi Kisah Ibu 2" class="ibu-image" onclick="openModal('https://source.unsplash.com/300x200/?pregnant-woman-story', 'Kisah Ibu Sari', 'Ibu Sari mengatasi risiko AKI dengan pola makan bergizi dan istirahat cukup. Ia selalu waspada terhadap tanda bahaya dan rutin periksa ke dokter.')">
+            <img src="https://source.unsplash.com/300x200/?mother-inspiring" alt="Ilustrasi Kisah Ibu 3" class="ibu-image" onclick="openModal('https://source.unsplash.com/300x200/?mother-inspiring', 'Kisah Ibu Maya', 'Ibu Maya berbagi pengalaman mengatasi stres selama kehamilan, yang membantu cegah AKI. Ia mendorong ibu lain untuk jaga kesehatan mental dan fisik.')">
+            <p>Klik gambar untuk baca cerita lengkap!</p>
+            <button onclick="shareStory()">Bagikan Ceritamu</button>
+            <button onclick="openSection('kuis')">Lanjut ke Kuis</button>
+            <script>
+                function shareStory() {
+                    alert('Kirim kisah Anda untuk dibagikan!');
+                }
+            </script>
+        </section>
+        
+        <!-- Kuis -->
+        <section id="kuis">
+            <h2>Kuis Interaktif 🧠</h2>
+            <p>Apa tanda bahaya kehamilan? <input type="text" id="kuisAnswer"><button onclick="checkKuis()">Submit</button></p>
+            <p id="kuisResult"></p>
+            <button onclick="openSection('gaya-hidup')">Lanjut ke Gaya Hidup</button>
+            <script>
+                function checkKuis() {
+                    const answer = document.getElementById('kuisAnswer').value.toLowerCase();
+                    if (answer.includes("pendarahan")) {
+                        document.getElementById('kuisResult').innerHTML = "Benar! Hebat, Ibu! 💕";
+                    } else {
+                        document.getElementById('kuisResult').innerHTML = "Coba lagi.";
+                    }
+                }
+            </script>
+        </section>
+        
+        <!-- Gaya Hidup -->
+        <section id="gaya-hidup">
+            <h2>Tips Gaya Hidup Sehat 🌿</h2>
+            <ul>
+                <li><i class="fas fa-apple-alt"></i> Makan bergizi</li>
+                <li><i class="fas fa-bed"></i> Istirahat cukup</li>
+                <li><i class="fas fa-walking"></i> Olahraga ringan</li>
+            </ul>
+            <button onclick="openSection('konsultasi')">Lanjut ke Konsultasi</button>
+        </section>
+        
+        <!-- Konsultasi -->
+        <section id="konsultasi">
+            <h2>Konsultasi & Bantuan 👩‍⚕️</h2>
+            <p>Chat dengan Bidan Virtual: <input type="text" id="chatInput"><button onclick="bidanResponse()">Kirim</button></p>
+            <p id="chatResponse"></p>
+            <button onclick="hubungiPuskesmas()">Hubungi Puskesmas</button>
+            <script>
+                function bidanResponse() {
+                    document.getElementById('chatResponse').innerHTML = "Bidan: Jaga kesehatan dengan minum obat rutin. 💕";
+                }
+                function hubungiPuskesmas() {
+                    alert('Hubungi nomor darurat: 112.');
+                }
+            </script>
+        </section>
+    </main>
+    
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <img id="modalImage" class="modal-image" alt="Gambar Cerita">
+            <p id="modalDescription"></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 MamaCare: Cegah AKI Sejak Dini. Anda kuat, Ibu! 💕</p>
+    </footer>
+</body>
+</html>
